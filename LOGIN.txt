@@ -12,9 +12,9 @@ function Datasheet(e){
   
   //------------------- SIMPAN RECORD -------------------
   if (e.parameter.func == "Simpan") {
-    var nama = e.parameter.NAMA;
-    var email = e.parameter.EMAIL;
-    var pass = e.parameter.PASSWORD;
+    var user = e.parameter.User;
+    var email = e.parameter.Email;
+    var pass = e.parameter.Password;
     var data=false;
     var lr= sh.getLastRow();
     for(var i=1;i<=lr;i++){
@@ -24,10 +24,10 @@ function Datasheet(e){
       } 
     }
     if (data){
-      var hasil= "email Sudah ada";
+      var hasil= "email Sudah terdaftar";
     }else{
-      var rowData = sh.appendRow([nama,email,pass]);  
-      var hasil="Registrasi Sukses";
+      var rowData = sh.appendRow([user,email,pass]);  
+      var hasil="Registrasi Berhasil..!";
     }
     return ContentService.createTextOutput(hasil).setMimeType(ContentService.MimeType.TEXT);
   }
