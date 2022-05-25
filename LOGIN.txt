@@ -1,0 +1,46 @@
+function doGet(e) {
+  return Datasheet(e);
+}
+
+function doPost(e) {
+  return Datasheet(e);
+}
+
+function Datasheet(e){
+  var ss = SpreadsheetApp.getActive();
+  var sh = ss.getSheetByName(e.parameter.SH); 
+  
+  //------------------- SIMPAN RECORD -------------------
+  if (e.parameter.func == "Simpan") {
+    var nama = e.parameter.NAMA;
+    var email = e.parameter.EMAIL;
+    var pass = e.parameter.PASSWORD;
+    var data=false;
+    var lr= sh.getLastRow();
+    for(var i=1;i<=lr;i++){
+      var data_email = sh.getRange(i, 2).getValue();
+      if(data_email==email){
+        data=true;
+      } 
+    }
+    if (data){
+      var hasil= "email Sudah ada";
+    }else{
+      var rowData = sh.appendRow([nama,email,pass]);  
+      var hasil="Registrasi Sukses";
+    }
+    return ContentService.createTextOutput(hasil).setMimeType(ContentService.MimeType.TEXT);
+  }
+    
+  //------------------- BACA SEMUA DATA -------------------
+   if (e.parameter.func == "Baca") {
+    var rg=sh.getDataRange().getValues();
+     var data="";
+     for(var row=1;row<rg.length;++row){
+          data +=rg[row].join(',')+'\n';
+     }
+    return ContentService.createTextOutput(data).setMimeType(ContentService.MimeType.TEXT);
+  }
+  
+
+  }
